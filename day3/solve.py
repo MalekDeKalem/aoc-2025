@@ -26,17 +26,14 @@ if (args.part == 1):
 elif (args.part == 2):
     k = 12
     for batteries in data:
-        battery_list = list(batteries)
-        battery_list.sort(reverse=True)
-        k_list = []
-        for i in range(k):
-            k_list.append(battery_list[i])
-
-        frequency_map = Counter(k_list)
-        for battery in batteries:
-            pass
-            
-
-        print(k_list)        
+        stack = []
+        to_remove = len(batteries) - k
+        for digit in batteries:
+            while to_remove > 0 and stack and stack[-1] < digit:
+                stack.pop()
+                to_remove -= 1
+            stack.append(digit) 
+        num_string = ''.join(stack[:k])
+        sum += int(num_string)
 
     print(sum)
