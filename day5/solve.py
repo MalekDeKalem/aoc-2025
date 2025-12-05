@@ -8,8 +8,6 @@ with open("../input/input_5.txt") as f:
     data = f.read().strip().split("\n") 
 
 cnt = 0
-
-
 l = list()
 is_over = False
 i = 0
@@ -41,18 +39,14 @@ elif (args.part == 2):
     print(l)
     merged_ranges = []
     for k in range(len(l)-1):
-        curr_start = l[k][0]
-        curr_end = l[k][1]
-        next_start = l[k+1][0]
-        next_end = l[k+1][1]
-        j = k+1
-        while curr_end > next_start and j < len(l):
-            curr_end = next_end
-            next_end = l[j][1]
-            next_start = l[j][0]
-            j += 1
-        k = j
-        merged_ranges.append((curr_start, curr_end))
-    print(merged_ranges) 
+        for start, end in l:
+            if not merged_ranges or start > merged_ranges[-1][1]:
+                merged_ranges.append((start, end))
+            else:
+                merged_ranges[-1] = (merged_ranges[-1][0], max(merged_ranges[-1][1], end))
+
+    for start, end in merged_ranges:
+        cnt += end - start + 1
+    print(cnt) 
 
 
