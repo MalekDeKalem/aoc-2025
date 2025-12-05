@@ -33,4 +33,26 @@ if (args.part == 1):
 
     print(cnt)
 elif (args.part == 2):
-    pass
+    l = list()
+    for r in data:
+        start, end = r.split('-')
+        l.append((int(start), int(end)))
+    l.sort(key=lambda x: x[0])
+    print(l)
+    merged_ranges = []
+    for k in range(len(l)-1):
+        curr_start = l[k][0]
+        curr_end = l[k][1]
+        next_start = l[k+1][0]
+        next_end = l[k+1][1]
+        j = k+1
+        while curr_end > next_start and j < len(l):
+            curr_end = next_end
+            next_end = l[j][1]
+            next_start = l[j][0]
+            j += 1
+        k = j
+        merged_ranges.append((curr_start, curr_end))
+    print(merged_ranges) 
+
+
