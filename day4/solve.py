@@ -31,9 +31,24 @@ if (args.part == 1):
                 cnt += 1 if neighbor_cnt < 4 else 0
     print(cnt)
 elif (args.part == 2):
+    data = [list(row) for row in data]
+    print(data)
     while True:
-        qu = Queue()
+        to_remove = []
         for r in range(rows):
             for c in range(cols):
                 if data[r][c] == '@':
-                    pass
+                    neighbor_cnt = 0
+                    for dr, dc in dirs:
+                        nr, nc = r + dr, c + dc
+                        if 0 <= nr < rows and 0 <= nc < cols:
+                            neighbor_cnt += 1 if data[nr][nc] == '@' else 0
+                    if neighbor_cnt < 4:
+                        to_remove.append((r, c))
+
+        if not to_remove:
+            break
+        for r, c in to_remove:
+            data[r][c] = 'x'
+        cnt += len(to_remove)
+    print(cnt)
